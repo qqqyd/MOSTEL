@@ -1,7 +1,7 @@
 # Exploring Stroke-Level Modifications for Scene Text Editing
 
 ## Introduction
-This is a pytorch implementation for paper [MOSTEL] (AAAI2023). It edits scene text at stroke level and can be trained using both labeled synthetic images and unpaired real scene text images.
+This is a pytorch implementation for paper [MOSTEL](https://arxiv.org/abs/2212.01982). It edits scene text at stroke level and can be trained using both labeled synthetic images and unpaired real scene text images.
 
 ## ToDo List
 
