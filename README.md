@@ -64,6 +64,8 @@ bash eval_2k.sh configs/mostel-train.py models/mostel.pth
 bash eval_scene.sh configs/mostel-train.py models/mostel.pth
 ```
 
+In our experiments, we found that SLM will improve the quantitative performance while leaving some text outline traces, which is not good for visualization. You can add ```--dilate``` for better visualization when generating predicted results.
+
 ## Citing the related works
 
 If you find our method useful for your research, please cite

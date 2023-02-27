@@ -5,6 +5,8 @@ import math
 import torch
 import cv2
 import time
+import torchvision.transforms.functional as F
+import numpy as np
 from tqdm import tqdm
 from mmcv import Config
 from torch.utils.data import DataLoader
@@ -23,6 +25,24 @@ def test_speed(G, i_t, i_s):
     return time_cost
 
 
+class MyDilate():
+    def __init__(self) -> None:
+        tmp_distance = 3
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (tmp_distance, tmp_distance))  # MORPH_RECT  MORPH_CROSS  MORPH_ELLIPSE
+        self.kernel = kernel
+        self.iterations = 1
+
+    def __call__(self, img, binary=True):
+        img = img * 255
+        if binary:
+            ret, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+        dilate_img = cv2.morphologyEx(img, cv2.MORPH_DILATE, self.kernel, iterations=self.iterations)
+        ret, dilate_img = cv2.threshold(dilate_img, 127, 255, cv2.THRESH_BINARY)
+        dilate_img = dilate_img[:, :, np.newaxis] / 255
+
+        return dilate_img
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--config', type=str)
@@ -33,6 +53,7 @@ def main():
     parser.add_argument('--vis', action='store_true', default=False)
     parser.add_argument('--slm', action='store_true', default=False)
     parser.add_argument('--speed', action='store_true', default=False)
+    parser.add_argument('--dilate', action='store_true', default=False)
     args = parser.parse_args()
 
     assert args.input_dir is not None
@@ -59,6 +80,9 @@ def main():
 
     G.eval()
     total_fps = []
+    if args.dilate:
+        mydilate = MyDilate()
+    
     with torch.no_grad():
         for step in tqdm(range(len(eval_data)), total=math.ceil(len(eval_data)/batch_size)):
             try:
@@ -93,6 +117,12 @@ def main():
                 o_b = gen_o_b[tmp_idx].detach().to('cpu').numpy().transpose(1, 2, 0)
                 o_f = gen_o_f[tmp_idx].detach().to('cpu').numpy().transpose(1, 2, 0)
                 x_t_tps = gen_x_t_tps[tmp_idx].detach().to('cpu').numpy().transpose(1, 2, 0)
+                
+                ori_o_mask_s = o_mask_s
+                if args.dilate:
+                    tmp_i_s = (i_s * 255)[tmp_idx].detach().to('cpu').numpy().transpose(1, 2, 0)
+                    o_mask_s = mydilate(o_mask_s)
+                    o_b = o_mask_s * o_b_ori + (1 - o_mask_s) * tmp_i_s
                 
                 if args.slm:
                     alpha = 0.5
