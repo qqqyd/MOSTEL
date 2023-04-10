@@ -41,7 +41,7 @@ python train.py --config configs/mostel-train.py
 ```
 
 ## Testing and evaluation
-Prepare the models and put them in ```models/```. You can download our models [here](https://rec.ustc.edu.cn/share/56198940-b05c-11ed-a0b3-69e6f6e19d65)(password: 85b5).
+Prepare the models and put them in ```models/```. You can download our models [here](https://rec.ustc.edu.cn/share/56198940-b05c-11ed-a0b3-69e6f6e19d65)(password: 85b5) or [OneDrive](https://mailustceducn-my.sharepoint.com/:f:/g/personal/qqqyd_mail_ustc_edu_cn/En6jxV64oUxAlEOC76Nwo0EBcdHNgZzxt5pZULX5_JGrSA)(password: 85b5).
 
 Generating the predicted results using following commands:
 ```bash
