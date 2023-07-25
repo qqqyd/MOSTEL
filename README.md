@@ -70,11 +70,15 @@ In our experiments, we found that SLM will improve the quantitative performance 
 
 If you find our method useful for your research, please cite
 
-    @article{qu2022mostel,
-      title={Exploring Stroke-Level Modifications for Scene Text Editing},
-      author={Qu, Yadong and Tan, Qingfeng and Xie, Hongtao and Xu, Jianjun  and Wang, Yuxin and Zhang, Yongdong},
-      journal={arXiv preprint arXiv:2212.01982},
-      year={2022}}
+    @inproceedings{qu2023exploring,
+      title={Exploring stroke-level modifications for scene text editing},
+      author={Qu, Yadong and Tan, Qingfeng and Xie, Hongtao and Xu, Jianjun and Wang, Yuxin and Zhang, Yongdong},
+      booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+      volume={37},
+      number={2},
+      pages={2119--2127},
+      year={2023}
+    }
 
 ## References
 
